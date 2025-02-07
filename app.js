@@ -6,6 +6,14 @@ const app = express();
 const connection = require("./db/connection");
 const User = require("./models/User");
 connection();
+function checkToken(req, res, next){
+    const authorization = req.headers["authorization"];
+    const token = authorization && authorization.split(" ")[1];
+    if(!token){
+        return res.status(401).json({ msg: "Access denied"});
+    }
+
+}
 //Public Route
 app.use(express.json());
 app.get("/", (req, res) => {
@@ -77,7 +85,7 @@ app.post("/auth/login", async (req, res) => {
     }
 });
 //Private route
-app.get("/user/:id", async (req, res) => {
+app.get("/user/:id", checkToken, async (req, res) => {
     const _id = req.params.id;
     let user = {};
     try {
