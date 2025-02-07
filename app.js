@@ -12,7 +12,13 @@ function checkToken(req, res, next){
     if(!token){
         return res.status(401).json({ msg: "Access denied"});
     }
-
+    try {
+        const secret = process.env.SECRET;
+        jwt.verify(token, secret);
+        next();
+    } catch (error) {
+        res.status(400).json({ msg: "Invalid token"});
+    }
 }
 //Public Route
 app.use(express.json());
