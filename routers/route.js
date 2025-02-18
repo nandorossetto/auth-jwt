@@ -1,0 +1,10 @@
+const router = require("express").Router();
+const online = require("./online");
+const register = require("./register");
+const login = require("./login");
+const users = require("./users");
+router.use("/", online);
+router.use("/", register);
+router.use("/", login);
+router.use("/", users);
+module.exports = router;
