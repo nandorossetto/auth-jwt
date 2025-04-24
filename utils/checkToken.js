@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const checkToken = (req, res, next) => {
+exports.checkToken = (req, res, next) => {
     const authorization = req.headers["authorization"];
     const token = authorization && authorization.split(" ")[1];
     if(!token){
@@ -12,4 +12,16 @@ const checkToken = (req, res, next) => {
         res.status(400).json({ msg: "Invalid token", error: error}).end();
     }
 }
-module.exports = checkToken;
+exports.checkRefreshToken = (req, res, next) => {
+    const { refreshToken } = req.body;
+    if(!refreshToken){
+        return res.status(401).json({ msg: "Access denied"});
+    }
+    try {
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN);
+        next();
+    } catch (error) {
+        res.status(400).json({ msg: "Invalid token", error: error}).end();
+    }
+}
+// module.exports = checkToken;
