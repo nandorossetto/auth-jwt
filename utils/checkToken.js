@@ -6,8 +6,7 @@ const checkToken = (req, res, next) => {
         return res.status(401).json({ msg: "Access denied"});
     }
     try {
-        const secret = process.env.SECRET;
-        jwt.verify(token, secret);
+        jwt.verify(token, process.env.SECRET);
         next();
     } catch (error) {
         res.status(400).json({ msg: "Invalid token", error: error}).end();

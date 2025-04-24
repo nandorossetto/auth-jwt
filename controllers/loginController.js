@@ -19,16 +19,17 @@ const loginController = {
             return res.status(404).json({msg: "User or password not found"});
         }
         try {
-            const secret = process.env.SECRET;
-            // const refresh = process.env.REFRESH;
             const token = jwt.sign({
                 id: user._id
-            }, secret, {expiresIn: process.env.EXPIRES_IN});
-            // const refreshToken = jwt.sign({
-            //     id: user._id
-            // }, refresh, {expiresIn: "200"});
-            // res.status(200).json({msg: "User authenticated", token: token, refreshToken: refreshToken});
-            res.status(200).json({msg: "User authenticated", token: token});
+            }, process.env.SECRET, {expiresIn: "10s"});
+            const refreshToken = jwt.sign({
+                id: user._id
+            }, process.env.REFRESH_TOKEN, {expiresIn: "1800s"});
+            res.status(200).json({
+                msg: "User authenticated", 
+                token: token, 
+                refreshToken: refreshToken
+            });
         } catch (error) {
             res.status(500).json({msg: "Error"});
             console.log(error);
