@@ -1,4 +1,4 @@
-const User = require("./../models/User");
+const User = require("../../entities/User");
 const bcrypt = require("bcrypt");
 const registerController = {
     create: async(req, res) => {

@@ -7,9 +7,9 @@ async function main() {
         await mongoose.connect(
             "mongodb+srv://" + DB_USER + ":" + DB_PASS + "@cluster0.untwh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
         );
-        console.log("DB Connected");
+        console.log("Mongo Atlas is Connected");
     }catch(error){
-        console.log(error);
+        console.log("Mongo Atlas is not Connected: " + error);
     }
 }
 module.exports = main;

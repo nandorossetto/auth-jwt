@@ -24,4 +24,3 @@ exports.checkRefreshToken = (req, res, next) => {
         res.status(400).json({ msg: "Invalid token", error: error}).end();
     }
 }
-// module.exports = checkToken;
